@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "63668378347",
+    "project_id": "alleat-d122f",
+    "storage_bucket": "alleat-d122f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63668378347:android:1de1060f8db446380a3cae",
+        "android_client_info": {
+          "package_name": "com.alleat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63668378347-b2j7vpp3o6mmil6dpi3vvqucdean5s2e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alleat",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "63668378347-461lhh603fihl1qri0ikdn759lbnvdub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMdBVF6lMCtI5gm2Ztt2hHQu4VvJlhWiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63668378347-461lhh603fihl1qri0ikdn759lbnvdub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

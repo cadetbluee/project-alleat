@@ -1,0 +1,75 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /home/ubuntu/data/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt/live/j11b104.p.ssafy.io/fullchain.pem:/etc/nginx/ssl/fullchain.pem
+      - /etc/letsencrypt/live/j11b104.p.ssafy.io/privkey.pem:/etc/nginx/ssl/privkey.pem
+    networks:
+      - local
+
+  spring-container:
+    build: ./backend/AllEat
+    container_name: spring-container
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./data/spring/profileimg:./profileimg
+    networks:
+      - local
+    environment:
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      NAVER_CLIENT_ID: ${NAVER_CLIENT_ID}
+      NAVER_CLIENT_SECRET: ${NAVER_CLIENT_SECRET}
+      DB_DOMAIN: ${DB_DOMAIN}
+      DOMAIN_PROPERTIES: ${DOMAIN_PROPERTIES}
+      KAKAO_CLIENT_ID: ${KAKAO_CLIENT_ID}
+      KAKAO_CLIENT_SECRET: ${KAKAO_CLIENT_SECRET}
+    depends_on:
+      - mysql-container
+  
+  
+  fastapi-container:
+    build: ./backend/Fast_API
+    container_name: fastapi-container
+    ports:
+      - "127.0.0.1:8000:8000"
+    networks:
+      - local
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      JWT_KEY: ${JWT_SECRET}
+      JWT_ALGORITHM: "HS256"
+    volumes:
+      - ./data/fastapi/weights:./weights
+      - ./data/fastapi/images:./images
+    depends_on:
+      - mysql-container
+    
+  mysql-container:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - ./data/mysql:/data
+      - ./data/mysql/db_data:/var/lib/mysql
+      - ./data/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - local
+
+networks:
+  local:
+    driver: bridge
